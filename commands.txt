@@ -53,3 +53,39 @@ kubectl logs $POD_NAME -c fluent-bit
 
 kubectl apply -f services.yaml
 kubectl get svc
+
+
+
+# Get service IPs
+export API_IP=$(kubectl get svc api-gateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export ORDER_IP=$(kubectl get svc order-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export PAYMENT_IP=$(kubectl get svc payment-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+# Generate requests
+for i in {1..5}; do
+  curl http://$API_IP/api/test
+  curl http://$ORDER_IP/orders
+  curl http://$PAYMENT_IP/payments
+  sleep 1
+done
+
+
+
+
+
+# API Gateway logs
+kubectl logs -l app=api-gateway -c fluent-bit --tail=20
+
+# Order Service logs
+kubectl logs -l app=order-service -c fluent-bit --tail=20
+
+# Payment Service logs
+kubectl logs -l app=payment-service -c fluent-bit --tail=20
+
+
+
+kubectl create configmap fluent-bit-daemonset-config \
+  --from-file=fluent-bit.conf=fluent-bit-daemonset.conf
+
+
+kubectl describe configmap fluent-bit-daemonset-config
