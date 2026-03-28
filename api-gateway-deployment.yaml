@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  labels:
+    app: api-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+      # Main application container
+      - name: api-gateway
+        image: <your-dockerhub-username>/api-gateway:v1
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: logs
+          mountPath: /app/logs
+      
+      # Fluent Bit sidecar container
+      - name: fluent-bit
+        image: fluent/fluent-bit:2.0
+        volumeMounts:
+        # Mount the shared logs directory (read-only)
+        - name: logs
+          mountPath: /app/logs
+          readOnly: true
+        # Mount the ConfigMap as configuration file
+        - name: fluent-bit-config
+          mountPath: /fluent-bit/etc/
+      
+      volumes:
+      # emptyDir: shared temporary storage within the pod
+      - name: logs
+        emptyDir: {}
+      # ConfigMap mounted as a volume
+      - name: fluent-bit-config
+        configMap:
+          name: fluent-bit-sidecar-config

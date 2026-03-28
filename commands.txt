@@ -1,2 +1,12 @@
 kubectl create configmap fluent-bit-sidecar-config \
   --from-file=fluent-bit.conf=fluent-bit-sidecar.conf
+
+
+kubectl describe configmap fluent-bit-sidecar-config
+
+
+
+
+kubectl apply -f api-gateway-deployment.yaml
+kubectl get deployment api-gateway
+kubectl get pods -l app=api-gateway
