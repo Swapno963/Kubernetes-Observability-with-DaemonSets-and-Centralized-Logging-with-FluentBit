@@ -1,0 +1,3 @@
+# Replace with your Docker Hub username
+docker build -t <your-dockerhub-username>/api-gateway:v1 .
+docker push <your-dockerhub-username>/api-gateway:v1
