@@ -1,2 +1,7 @@
 docker build -t <your-dockerhub-username>/order-service:v1 .
 docker push <your-dockerhub-username>/order-service:v1
+
+
+
+kubectl apply -f order-service-deployment.yaml
+kubectl get pods -l app=order-service
