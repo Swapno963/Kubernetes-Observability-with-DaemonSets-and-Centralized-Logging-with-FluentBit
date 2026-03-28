@@ -10,3 +10,39 @@ kubectl describe configmap fluent-bit-sidecar-config
 kubectl apply -f api-gateway-deployment.yaml
 kubectl get deployment api-gateway
 kubectl get pods -l app=api-gateway
+
+
+
+
+
+kubectl apply -f api-gateway-service.yaml
+kubectl get svc api-gateway
+
+
+
+
+# Get external IP or use port-forward
+export API_IP=$(kubectl get svc api-gateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+# Make several requests
+curl http://$API_IP/api/test
+curl http://$API_IP/api/test
+curl http://$API_IP/health
+
+
+
+
+View application container logs:
+
+# Get one of the pod names
+export POD_NAME=$(kubectl get pods -l app=api-gateway -o jsonpath='{.items[0].metadata.name}')
+
+# View main container logs (should see Flask startup messages)
+kubectl logs $POD_NAME -c api-gateway
+
+
+
+View Fluent Bit sidecar logs:
+
+# View sidecar container logs (should see log entries from the file)
+kubectl logs $POD_NAME -c fluent-bit

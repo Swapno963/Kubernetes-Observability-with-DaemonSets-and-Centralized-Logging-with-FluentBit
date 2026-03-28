@@ -1,2 +1,6 @@
 docker build -t <your-dockerhub-username>/payment-service:v1 .
 docker push <your-dockerhub-username>/payment-service:v1
+
+
+kubectl apply -f payment-service-deployment.yaml
+kubectl get pods -l app=payment-service
