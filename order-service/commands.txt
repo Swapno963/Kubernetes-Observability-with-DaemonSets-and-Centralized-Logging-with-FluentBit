@@ -1,0 +1,2 @@
+docker build -t <your-dockerhub-username>/order-service:v1 .
+docker push <your-dockerhub-username>/order-service:v1
