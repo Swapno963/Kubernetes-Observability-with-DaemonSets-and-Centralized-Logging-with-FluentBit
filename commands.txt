@@ -1,0 +1,2 @@
+kubectl create configmap fluent-bit-sidecar-config \
+  --from-file=fluent-bit.conf=fluent-bit-sidecar.conf
