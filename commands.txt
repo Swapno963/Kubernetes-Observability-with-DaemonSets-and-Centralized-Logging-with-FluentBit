@@ -46,3 +46,10 @@ View Fluent Bit sidecar logs:
 
 # View sidecar container logs (should see log entries from the file)
 kubectl logs $POD_NAME -c fluent-bit
+
+
+
+
+
+kubectl apply -f services.yaml
+kubectl get svc
