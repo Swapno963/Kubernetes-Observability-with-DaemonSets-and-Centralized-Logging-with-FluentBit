@@ -1,5 +1,5 @@
-docker build -t <your-dockerhub-username>/payment-service:v1 .
-docker push <your-dockerhub-username>/payment-service:v1
+docker build -t swapno/payment-service:v1 .
+docker push swapno/payment-service:v1
 
 
 kubectl apply -f payment-service-deployment.yaml

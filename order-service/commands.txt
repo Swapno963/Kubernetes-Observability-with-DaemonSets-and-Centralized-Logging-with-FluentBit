@@ -1,5 +1,5 @@
-docker build -t <your-dockerhub-username>/order-service:v1 .
-docker push <your-dockerhub-username>/order-service:v1
+docker build -t swapno/order-service:v1 .
+docker push swapno/order-service:v1
 
 
 

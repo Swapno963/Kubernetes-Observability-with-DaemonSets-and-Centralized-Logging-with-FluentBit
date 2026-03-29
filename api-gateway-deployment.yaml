@@ -17,7 +17,7 @@ spec:
       containers:
       # Main application container
       - name: api-gateway
-        image: <your-dockerhub-username>/api-gateway:v1
+        image: swapno/api-gateway:v1
         ports:
         - containerPort: 8000
         volumeMounts:

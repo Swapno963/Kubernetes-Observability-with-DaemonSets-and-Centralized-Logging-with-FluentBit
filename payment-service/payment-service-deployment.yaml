@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: payment-service
-        image: <your-dockerhub-username>/payment-service:v1
+        image: swapno/payment-service:v1
         ports:
         - containerPort: 8000
         volumeMounts:
